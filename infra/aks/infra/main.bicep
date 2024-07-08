@@ -150,8 +150,8 @@ module openAi './resources/openai.bicep' = {
           capacity: 10
         }
         model: {
-          name: 'gpt-35-turbo'
-          version: '0613'
+          name: 'gpt-4o'
+          version: '2024-05-13'
         }
       }
       {
@@ -161,8 +161,8 @@ module openAi './resources/openai.bicep' = {
           capacity: 10
         }
         model: {
-          name: 'text-embedding-ada-002'
-          version: '2'
+          name: 'text-embedding-3-large'
+          version: '1'
         }
       }
     ]
@@ -189,50 +189,7 @@ module storage './resources/storage.bicep' = {
         name: 'product-policy'
       }
     ]
-    files: [
-      {
-        name: 'retailassistant-default-txt'
-        file: 'Default.txt'
-        path: 'RetailAssistant/Default.txt'
-        content: loadTextContent('../../SystemPrompts/RetailAssistant/Default.txt')
-        container: 'system-prompt'
-      }
-      {
-        name: 'retailassistant-limited-txt'
-        file: 'Limited.txt'
-        path: 'RetailAssistant/Limited.txt'
-        content: loadTextContent('../../SystemPrompts/RetailAssistant/Limited.txt')
-        container: 'system-prompt'
-      }
-      {
-        name: 'summarizer-twowords-txt'
-        file: 'TwoWords.txt'
-        path: 'Summarizer/TwoWords.txt'
-        content: loadTextContent('../../SystemPrompts/Summarizer/TwoWords.txt')
-        container: 'system-prompt'
-      }
-      {
-        name: 'blobmemorysourceconfig-json'
-        file: 'BlobMemorySourceConfig.json'
-        path: 'BlobMemorySourceConfig.json'
-        content: loadJsonContent('../../MemorySources/BlobMemorySourceConfig.json')
-        container: 'memory-source'
-      }
-      {
-        name: 'return-policies-txt'
-        file: 'return-policies.txt'
-        path: 'return-policies.txt'
-        content: loadTextContent('../../MemorySources/return-policies.txt')
-        container: 'product-policy'
-      }
-      {
-        name: 'shipping-policies-txt'
-        file: 'shipping-policies.txt'
-        path: 'shipping-policies.txt'
-        content: loadTextContent('../../MemorySources/shipping-policies.txt')
-        container: 'product-policy'
-      }
-    ]
+    files: []
     keyvaultName: keyVault.outputs.name
     location: location
     name: '${abbrs.storageStorageAccounts}${resourceToken}'

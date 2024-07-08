@@ -52,7 +52,7 @@ This solution deploys to either Azure Kubernetes Service (**AKS**) or Azure Cont
 #### AKS deployment
 
 ```bash
-cd ./aks
+cd ./infra/aks
 azd up
 ```
 
@@ -67,7 +67,7 @@ If you closed the window and need to find the external IP address of the service
 #### ACA deployment
 
 ```bash
-cd ./aca
+cd ./infra/aca
 azd up
 ```
 

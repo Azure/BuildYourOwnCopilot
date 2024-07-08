@@ -21,7 +21,7 @@ infra:
     module: main
 services:
     api:
-        project: ../src/ChatAPI 
+        project: ../../src/ChatAPI 
         language: dotnet 
         host: aks 
         docker:
@@ -37,7 +37,7 @@ services:
               name: api
               relativePath: /api/
     web:
-        project: ../src/UserPortal 
+        project: ../../src/UserPortal 
         language: dotnet 
         host: aks 
         docker:
