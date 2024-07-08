@@ -13,7 +13,7 @@ namespace BuildYourOwnCopilot.SemanticKernel.Plugins.Core
     /// <summary>
     /// Provides the capability to build the context for chat completions by recalling object information from the memory store using vector-based similarity.
     /// </summary>
-    public sealed class MemoryStoreContextPlugin
+    public sealed class MemoryStoreContextPlugin : PluginBase
     {
         private readonly VectorMemoryStore _memoryStore;
         private readonly VectorStoreSettings _settings;
@@ -25,16 +25,12 @@ namespace BuildYourOwnCopilot.SemanticKernel.Plugins.Core
         public MemoryStoreContextPlugin(
             VectorMemoryStore memoryStore,
             VectorStoreSettings settings,
-            ILogger<MemoryStoreContextPlugin> logger)
+            ILogger<MemoryStoreContextPlugin> logger) : base(settings.IndexName, settings.Description)
         {
             _memoryStore = memoryStore;
             _settings = settings;
             _logger = logger;
         }
-
-        public string Name => _settings.IndexName;
-
-        public string Description => _settings.Description;
 
         public async Task<List<string>> GetMemories(
             string userPrompt)

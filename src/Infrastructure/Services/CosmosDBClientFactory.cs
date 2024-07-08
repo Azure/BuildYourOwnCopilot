@@ -1,7 +1,9 @@
 ﻿using BuildYourOwnCopilot.Common.Models.Configuration;
 using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using BuildYourOwnCopilot.SemanticKernel.Memory;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace BuildYourOwnCopilot.Infrastructure.Services
 {
@@ -16,10 +18,7 @@ namespace BuildYourOwnCopilot.Infrastructure.Services
             new CosmosClientOptions
             {
                 ConnectionMode = ConnectionMode.Gateway,
-                SerializerOptions = new CosmosSerializationOptions
-                {
-                    PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase,
-                }
+                Serializer = new CosmosSystemTextJsonSerializer(JsonSerializerOptions.Default)
             });
 
         public CosmosClient Client => _client;

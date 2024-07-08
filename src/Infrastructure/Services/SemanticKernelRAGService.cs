@@ -3,18 +3,22 @@ using BuildYourOwnCopilot.Common.Interfaces;
 using BuildYourOwnCopilot.Common.Models.BusinessDomain;
 using BuildYourOwnCopilot.Common.Models.Chat;
 using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.Models;
 using BuildYourOwnCopilot.Infrastructure.Services;
 using BuildYourOwnCopilot.SemanticKernel.Memory;
 using BuildYourOwnCopilot.SemanticKernel.Plugins.Core;
 using BuildYourOwnCopilot.SemanticKernel.Plugins.Memory;
+using BuildYourOwnCopilot.Service.Constants;
 using BuildYourOwnCopilot.Service.Interfaces;
 using BuildYourOwnCopilot.Service.Models.ConfigurationOptions;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using Microsoft.SemanticKernel.Memory;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 #pragma warning disable SKEXP0001, SKEXP0010, SKEXP0020, SKEXP0050, SKEXP0060
@@ -37,7 +41,7 @@ public class SemanticKernelRAGService : IRAGService
     readonly Dictionary<string, VectorMemoryStore> _longTermMemoryStores = [];
     VectorMemoryStore _shortTermMemoryStore;
 
-    readonly List<MemoryStoreContextPlugin> _contextPlugins = [];
+    readonly List<PluginBase> _contextPlugins = [];
     KnowledgeManagementContextPlugin _kmContextPlugin;
     ContextPluginsListPlugin _listPlugin;
 
@@ -173,6 +177,10 @@ public class SemanticKernelRAGService : IRAGService
             _shortTermMemoryStore,
             _settings.StaticKnowledgeIndexing,
             _loggerFactory.CreateLogger<MemoryStoreContextPlugin>()));
+
+        _contextPlugins.AddRange(
+            _settings.SystemCommandPlugins.Select(
+                sp => new SystemCommandPlugin(sp.Name, sp.Description, sp.PromptName)));
     }
 
     private async Task EnsureShortTermMemory()
@@ -213,20 +221,84 @@ public class SemanticKernelRAGService : IRAGService
         }
     }
 
-    private List<MemoryStoreContextPlugin> GetPluginsToRun(string pluginNamesList)
+    private List<MemoryStoreContextPlugin> GetMemoryPluginsToRun(List<string> pluginNames) =>
+        _contextPlugins
+            .Where(cp => pluginNames.Contains(cp.Name) && (cp is MemoryStoreContextPlugin))
+            .Select(cp => (cp as MemoryStoreContextPlugin)!)
+            .ToList();
+
+    private async Task<string> ExecuteSystemCommands(List<string> pluginNames, string userPompt)
     {
+        var results = new List<string>();
+
+        foreach (var pluginName in pluginNames)
+        {
+            switch (pluginName)
+            {
+                case SystemCommands.ResetSemanticCache:
+                    
+                    await _semanticCache.Reset();
+                    results.Add("The content of the semantic cache was reset.");
+                    break;
+                
+                case SystemCommands.SetSemanticCacheSimilarityScore:
+                    
+                    var similarityScore = await GetSemanticCacheSimilarityScore(userPompt, pluginName);
+                    var newSimilarityScore = similarityScore == 1 
+                        ? 1
+                        : similarityScore;
+
+                    _semanticCache.SetMinRelevanceOverride(newSimilarityScore);
+
+                    results.Add(similarityScore == 1
+                        ? "The similarity score parser was not able to parse a value for the similarity score of the semantic cache. The default value of 0.95 will be used."
+                        : $"The similarity score {similarityScore} was set for the semantic cache. The new score will be in effect until the backend API is restarted.");
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+
+        results.Add("Because your request contained system commands, all other requests were ignored.");
+
+        return string.Join(Environment.NewLine, results);
+    }
+
+    private bool HasSystemCommands(List<string> pluginNames) =>
+        pluginNames
+            .Intersect([
+                SystemCommands.ResetSemanticCache,
+                SystemCommands.SetSemanticCacheSimilarityScore
+            ])
+            .Any();
+
+    private async Task<double> GetSemanticCacheSimilarityScore(string userPrompt, string pluginName)
+    {
+        var plugin = _contextPlugins.SingleOrDefault(p => p.Name == pluginName);
+        if (plugin == null)
+            return 1;
+        var pluginPrompt = await _systemPromptService.GetPrompt(plugin.PromptName!);
+
+        var result = await _semanticKernel.InvokePromptAsync(
+            pluginPrompt,
+            new KernelArguments()
+            {
+                ["userPrompt"] = userPrompt
+            });
+        var serializedSimilarityScore = result.GetValue<string>();
+
         try
         {
-            var pluginNames = pluginNamesList
-                .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
-                .Select(pn => pn.ToLower())
-                .ToList();
-            return _contextPlugins.Where(cp => pluginNames.Contains(cp.Name)).ToList();
+            var score = JsonSerializer.Deserialize<ParsedSimilarityScore>(serializedSimilarityScore!);
+            return score == null
+                ? 1
+                : score.SimilarityScore;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Could not parse the list of plugin names: {PluginNames}.", pluginNamesList);
-            return _contextPlugins;
+            _logger.LogError(ex, "Error when parsing similarity score: {ErrorMessage}", ex.Message);
+            return 1;
         }
     }
 
@@ -262,8 +334,43 @@ public class SemanticKernelRAGService : IRAGService
             });
 
         var pluginNamesList = result.GetValue<string>();
+        if (string.IsNullOrWhiteSpace(pluginNamesList))
+        {
+            return new CompletionResult
+            {
+                UserPrompt = userPrompt,
+                UserPromptTokens = cacheItem.UserPromptTokens,
+                UserPromptEmbedding = cacheItem.UserPromptEmbedding.ToArray(),
+                RenderedPrompt = promptFilter.RenderedPrompt,
+                RenderedPromptTokens = 0,
+                Completion = "I am sorry, I was not able to determine a suitable action based on your request.",
+                CompletionTokens = 0,
+                FromCache = false
+            };
+        }
 
-        var pluginsToRun = GetPluginsToRun(pluginNamesList!);
+        var pluginNames = pluginNamesList
+            .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+            .Select(pn => pn.ToLower())
+            .ToList();
+
+        if (HasSystemCommands(pluginNames))
+        {
+            var systemCommandsResult = await ExecuteSystemCommands(pluginNames, userPrompt);
+            return new CompletionResult
+            {
+                UserPrompt = userPrompt,
+                UserPromptTokens = cacheItem.UserPromptTokens,
+                UserPromptEmbedding = cacheItem.UserPromptEmbedding.ToArray(),
+                RenderedPrompt = promptFilter.RenderedPrompt,
+                RenderedPromptTokens = 0,
+                Completion = systemCommandsResult,
+                CompletionTokens = 0,
+                FromCache = false
+            };
+        }
+
+        var pluginsToRun = GetMemoryPluginsToRun(pluginNames);
         _kmContextPlugin.SetContextPlugins(pluginsToRun);
 
         result = await _semanticKernel.InvokePromptAsync(
@@ -334,4 +441,7 @@ public class SemanticKernelRAGService : IRAGService
                 itemTransformer.EmbeddingId,
                 itemTransformer.Name);
     }
+
+    public async Task ResetSemanticCache() =>
+        await _semanticCache.Reset();
 }

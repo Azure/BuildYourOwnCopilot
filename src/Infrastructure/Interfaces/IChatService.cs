@@ -53,4 +53,6 @@ public interface IChatService
     Task DeleteProduct(string productId, string categoryId);
 
     Task<CompletionPrompt> GetCompletionPrompt(string sessionId, string completionPromptId);
+
+    Task ResetSemanticCache();
 }

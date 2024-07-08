@@ -14,5 +14,7 @@ namespace BuildYourOwnCopilot.Service.Interfaces
         Task AddMemory(IItemTransformer itemTransformer);
 
         Task RemoveMemory(IItemTransformer itemTransformer);
+
+        Task ResetSemanticCache();
     }
 }

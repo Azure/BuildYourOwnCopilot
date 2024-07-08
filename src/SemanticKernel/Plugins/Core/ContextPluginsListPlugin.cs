@@ -8,13 +8,13 @@ namespace BuildYourOwnCopilot.SemanticKernel.Plugins.Core
     /// </summary>
     public sealed class ContextPluginsListPlugin
     {
-        private readonly List<MemoryStoreContextPlugin> _contextPlugins;
+        private readonly List<PluginBase> _contextPlugins;
 
         /// <summary>
         /// Creates a new instance of the AdvancedChatPlugin
         /// </summary>
         public ContextPluginsListPlugin(
-            List<MemoryStoreContextPlugin> contextPlugins)
+            List<PluginBase> contextPlugins)
         {
             _contextPlugins = contextPlugins;
         }

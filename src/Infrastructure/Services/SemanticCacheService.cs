@@ -11,7 +11,7 @@ using BuildYourOwnCopilot.Service.Models.ConfigurationOptions;
 using MathNet.Numerics;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 #pragma warning disable SKEXP0010, SKEXP0020;
 
@@ -25,6 +25,8 @@ namespace BuildYourOwnCopilot.Infrastructure.Services
         private readonly ITokenizerService _tokenizer;
         private readonly string _tokenizerEncoder;
         private readonly ILogger<SemanticCacheService> _logger;
+
+        private double? _minRelevanceOverride;
 
         public SemanticCacheService(
             SemanticCacheServiceSettings settings,
@@ -61,6 +63,15 @@ namespace BuildYourOwnCopilot.Infrastructure.Services
         public async Task Initialize() =>
             await _memoryStore.Initialize();
 
+        public async Task Reset() =>
+            await _memoryStore.Reset();
+
+        public void SetMinRelevanceOverride(double minRelevance) =>
+            _minRelevanceOverride = minRelevance;
+
+        public double MinRelevance =>
+            _minRelevanceOverride ?? _searchSettings.MinRelevance;
+
         public async Task<SemanticCacheItem> GetCacheItem(string userPrompt, List<Message> messageHistory)
         {
             var uniqueId = Guid.NewGuid().ToString().ToLower();
@@ -78,7 +89,7 @@ namespace BuildYourOwnCopilot.Infrastructure.Services
             if (userMessageHistory.Count > 0)
             {
                 var similarity = 1 - Distance.Cosine(cacheItem.UserPromptEmbedding.ToArray(), userMessageHistory.Last().Vector!);
-                if (similarity >= _searchSettings.MinRelevance)
+                if (similarity >= MinRelevance)
                 {
                     // Looks like the user just repeated the previous question
                     cacheItem.ConversationContext = userMessageHistory.Last().Text;
@@ -99,13 +110,13 @@ namespace BuildYourOwnCopilot.Infrastructure.Services
                     .GetNearestMatches(
                         cacheItem.ConversationContextEmbedding,
                         1,
-                        _searchSettings.MinRelevance)
+                        MinRelevance)
                     .ToListAsync()
                     .ConfigureAwait(false);
                 if (cacheMatches.Count == 0)
                     return cacheItem;
 
-                var matchedCacheItem = JsonConvert.DeserializeObject<SemanticCacheItem>(
+                var matchedCacheItem = JsonSerializer.Deserialize<SemanticCacheItem>(
                     cacheMatches.First().Metadata.AdditionalMetadata);
 
                 cacheItem.Completion = matchedCacheItem!.Completion;
@@ -124,7 +135,7 @@ namespace BuildYourOwnCopilot.Infrastructure.Services
                 cacheItem.Id,
                 cacheItem.ConversationContext,
                 cacheItem.ConversationContextEmbedding,
-                JsonConvert.SerializeObject(cacheItem),
+                JsonSerializer.Serialize(cacheItem),
                 cacheItem.PartitionKey);
 
         private async Task SetConversationContext(SemanticCacheItem cacheItem, List<Message> userMessageHistory)

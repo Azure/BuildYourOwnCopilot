@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
-using BuildYourOwnCopilot.Common.Interfaces;
+﻿using BuildYourOwnCopilot.Common.Interfaces;
 using BuildYourOwnCopilot.Common.Models.BusinessDomain;
 using BuildYourOwnCopilot.Common.Models.Chat;
 using BuildYourOwnCopilot.Service.Constants;
 using BuildYourOwnCopilot.Service.Interfaces;
-using BuildYourOwnCopilot.Common.Services;
-using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace BuildYourOwnCopilot.Service.Services;
 
@@ -195,8 +193,8 @@ public class ChatService : IChatService
     public async Task AddProduct(Product product)
     {
         ArgumentNullException.ThrowIfNull(product);
-        ArgumentNullException.ThrowIfNullOrEmpty(product.id);
-        ArgumentNullException.ThrowIfNullOrEmpty(product.categoryId);
+        ArgumentException.ThrowIfNullOrEmpty(product.id);
+        ArgumentException.ThrowIfNullOrEmpty(product.categoryId);
 
         await _cosmosDBService.InsertProductAsync(product);
     }
@@ -204,8 +202,8 @@ public class ChatService : IChatService
     public async Task AddCustomer(Customer customer)
     {
         ArgumentNullException.ThrowIfNull(customer);
-        ArgumentNullException.ThrowIfNullOrEmpty(customer.id);
-        ArgumentNullException.ThrowIfNullOrEmpty(customer.customerId);
+        ArgumentException.ThrowIfNullOrEmpty(customer.id);
+        ArgumentException.ThrowIfNullOrEmpty(customer.customerId);
 
         await _cosmosDBService.InsertCustomerAsync(customer);
     }
@@ -213,16 +211,16 @@ public class ChatService : IChatService
     public async Task AddSalesOrder(SalesOrder salesOrder)
     {
         ArgumentNullException.ThrowIfNull(salesOrder);
-        ArgumentNullException.ThrowIfNullOrEmpty(salesOrder.id);
-        ArgumentNullException.ThrowIfNullOrEmpty(salesOrder.customerId);
+        ArgumentException.ThrowIfNullOrEmpty(salesOrder.id);
+        ArgumentException.ThrowIfNullOrEmpty(salesOrder.customerId);
 
         await _cosmosDBService.InsertSalesOrderAsync(salesOrder);
     }
 
     public async Task DeleteProduct(string productId, string categoryId)
     {
-        ArgumentNullException.ThrowIfNullOrEmpty(productId);
-        ArgumentNullException.ThrowIfNullOrEmpty(categoryId);
+        ArgumentException.ThrowIfNullOrEmpty(productId);
+        ArgumentException.ThrowIfNullOrEmpty(categoryId);
 
         await _cosmosDBService.DeleteProductAsync(productId, categoryId);
 
@@ -242,9 +240,12 @@ public class ChatService : IChatService
 
     public async Task<CompletionPrompt> GetCompletionPrompt(string sessionId, string completionPromptId)
     {
-        ArgumentNullException.ThrowIfNullOrEmpty(sessionId);
-        ArgumentNullException.ThrowIfNullOrEmpty(completionPromptId);
+        ArgumentException.ThrowIfNullOrEmpty(sessionId);
+        ArgumentException.ThrowIfNullOrEmpty(completionPromptId);
 
         return await _cosmosDBService.GetCompletionPrompt(sessionId, completionPromptId);
     }
+
+    public async Task ResetSemanticCache() =>
+        await _ragService.ResetSemanticCache();
 }

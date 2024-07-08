@@ -9,7 +9,7 @@ namespace BuildYourOwnCopilot.SemanticKernel.Memory;
 /// <summary>
 /// This class provides a default implementation of System.Text.Json Cosmos Linq Serializer.
 /// </summary>
-internal sealed class CosmosSystemTextJsonSerializer : CosmosLinqSerializer
+public class CosmosSystemTextJsonSerializer : CosmosLinqSerializer
 {
     /// <summary>
     /// A read-only instance of <see cref="JsonSerializerOptions"/>.

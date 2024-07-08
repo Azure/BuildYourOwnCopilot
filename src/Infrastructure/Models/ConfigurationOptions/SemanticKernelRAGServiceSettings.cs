@@ -14,5 +14,6 @@ namespace BuildYourOwnCopilot.Service.Models.ConfigurationOptions
         public required CosmosDBVectorStoreSettings SemanticCacheIndexing { get; init; }
         public required TokenTextSplitterServiceSettings TextSplitter {  get; init; }
         public required SemanticCacheServiceSettings SemanticCache { get; init; }
+        public required List<SystemCommandPluginSettings> SystemCommandPlugins { get; init; }
     }
 }

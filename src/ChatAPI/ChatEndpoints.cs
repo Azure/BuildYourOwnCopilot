@@ -69,6 +69,10 @@ namespace ChatAPI
             app.MapDelete("/products/{productId}", async (string productId, string categoryId) =>
                     await _chatService.DeleteProduct(productId, categoryId))
                 .WithName("DeleteProduct");
+
+            app.MapPost("/semanticcache/reset", async () =>
+                await _chatService.ResetSemanticCache())
+                .WithName("ResetSemanticCache");
         }
     }
 }

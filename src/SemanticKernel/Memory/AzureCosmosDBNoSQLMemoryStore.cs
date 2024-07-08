@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace BuildYourOwnCopilot.SemanticKernel.Memory;
 
@@ -400,7 +400,7 @@ public class AzureCosmosDBNoSQLMemoryStore : IMemoryStore, IDisposable
             ORDER BY x.similarityScore desc
             """);
         queryDefinition.WithParameter("@similarityScore", minRelevanceScore);
-        queryDefinition.WithParameter("@embedding", embedding);
+        queryDefinition.WithParameter("@embedding", embedding.ToArray());
         queryDefinition.WithParameter("@topN", limit);
 
         var feedIterator = this._cosmosClient
@@ -504,7 +504,8 @@ internal sealed class MemoryRecordWithId : MemoryRecord
     /// We do this because Azure Cosmos DB requires a property named "id" for
     /// each item.
     /// </summary>
-    [JsonProperty("id")]
+    [JsonInclude]
+    [JsonPropertyName("id")]
     public string Id => this.Key;
 
     private string GetDebuggerDisplay()
