@@ -163,7 +163,7 @@ With the addition of the semantic cache, the solution also needed to provide a w
 | Command | Description | User Prompt 
 | --- | --- | --- |
 | Reset semantic cache | Resets the semantic cache by removing all entries from the vector store index. | `Can you please reset the semantic cache?` |
-| Set semantic cache similarity threshold value | Sets the similarity threshold used by the semantic cache to match cache items to a specified value. The new value is not persisted as a configuration value and is in effect only until the backend API service is restarted. | `Can you set the semantic cache similarity score to 0.85?` |
+| Set semantic cache similarity threshold value | Sets the similarity threshold used by the semantic cache to match cache items to a specified value. The new value is not persisted as a configuration value and is in effect only until the backend API service is restarted. | `Can you set the semantic cache similarity score to 0.82?` |
 
 > [!NOTE]
 > Since the completions returned by system commands can interfere with the normal flow of conversations, it is recommended to use them in separate conversation.

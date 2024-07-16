@@ -21,12 +21,31 @@ Here are some sample questions you can ask:
 
 ## Exploring the Semantic Cache
 
+1. 
+
 User types in some prompts for data that gets cached.
 In new session test similar prompts, observe results.
 Change similarity score. Start new sequence of prompts and completions, see the impact on cache hits.
 
 etc...
 
+
+### System commands to manage the Semantic Cache
+
+The following [natural language system commands](/docs/concepts.md#natural-language-system-commands) are supported by the AI Assistant to manage the semantic cache:
+
+| Command | Description | User Prompt 
+| --- | --- | --- |
+| Reset semantic cache | Resets the semantic cache by removing all entries from the vector store index. | `Can you please reset the semantic cache?` |
+| Set semantic cache similarity threshold value | Sets the similarity threshold used by the semantic cache to match cache items to a specified value. The new value is not persisted as a configuration value and is in effect only until the backend API service is restarted. | `Can you set the semantic cache similarity score to 0.82?` |
+
+Here is an example of how to set the similarity threshold value:
+
+![Set semantic cache similarity threshold value](../media/semantic-cache-set-similarity.png)
+
+Here is an example of how to reset the semantic cache:
+
+![Reset semantic cache](../media/semantic-cache-reset.png)
 
 ## Handling real-time data
 

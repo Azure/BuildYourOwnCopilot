@@ -51,7 +51,12 @@ namespace BuildYourOwnCopilot.Common.Services
                 _textToEmbed = transformedItem.TextToEmbed;
 
                 _embeddingId = string.Join(" ", _typedItem.GetPropertyValues(_typeMetadata.IdentifyingProperties!));
+                if (string.IsNullOrWhiteSpace(_embeddingId))
+                    _embeddingId = Guid.NewGuid().ToString().ToLower();
+
                 _embeddingPartitionKey = string.Join(" ", _typedItem.GetPropertyValues(_typeMetadata.PartitioningProperties!));
+                if (string.IsNullOrWhiteSpace(_embeddingPartitionKey))
+                    _embeddingPartitionKey = _embeddingId;
             }
         }
 
