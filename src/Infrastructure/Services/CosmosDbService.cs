@@ -2,7 +2,7 @@
 using BuildYourOwnCopilot.Common.Models.BusinessDomain;
 using BuildYourOwnCopilot.Common.Models.Chat;
 using BuildYourOwnCopilot.Common.Models.Configuration;
-using BuildYourOwnCopilot.Service.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Extensions.Logging;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
-namespace BuildYourOwnCopilot.Service.Services
+namespace BuildYourOwnCopilot.Infrastructure.Services
 {
     /// <summary>
     /// Service to access Azure Cosmos DB for NoSQL.

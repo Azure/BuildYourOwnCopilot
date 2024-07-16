@@ -1,11 +1,11 @@
 ﻿using BuildYourOwnCopilot.Common.Interfaces;
 using BuildYourOwnCopilot.Common.Models.BusinessDomain;
 using BuildYourOwnCopilot.Common.Models.Chat;
-using BuildYourOwnCopilot.Service.Constants;
-using BuildYourOwnCopilot.Service.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.Constants;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace BuildYourOwnCopilot.Service.Services;
+namespace BuildYourOwnCopilot.Infrastructure.Services;
 
 public class ChatService : IChatService
 {

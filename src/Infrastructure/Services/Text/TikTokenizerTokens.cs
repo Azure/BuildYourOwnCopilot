@@ -1,4 +1,4 @@
-﻿namespace BuildYourOwnCopilot.Service.Services.Text
+﻿namespace BuildYourOwnCopilot.Infrastructure.Services.Text
 {
     /// <summary>
     /// Well-known special TikTokenizer token names.

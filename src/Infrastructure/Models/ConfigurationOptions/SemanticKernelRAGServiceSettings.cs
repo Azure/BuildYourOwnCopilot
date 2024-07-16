@@ -3,7 +3,7 @@ using BuildYourOwnCopilot.Common.Models.ConfigurationOptions;
 using BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions;
 using BuildYourOwnCopilot.SemanticKernel.Models;
 
-namespace BuildYourOwnCopilot.Service.Models.ConfigurationOptions
+namespace BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions
 {
     public record SemanticKernelRAGServiceSettings
     {

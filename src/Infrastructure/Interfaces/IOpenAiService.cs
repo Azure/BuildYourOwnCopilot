@@ -1,4 +1,4 @@
-﻿namespace BuildYourOwnCopilot.Service.Interfaces;
+﻿namespace BuildYourOwnCopilot.Infrastructure.Interfaces;
 
 public interface IOpenAiService
 {

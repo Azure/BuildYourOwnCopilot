@@ -1,10 +1,10 @@
 ﻿using Azure.Storage.Blobs;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using BuildYourOwnCopilot.Service.Interfaces;
 
-namespace BuildYourOwnCopilot.Service.MemorySource
+namespace BuildYourOwnCopilot.Infrastructure.MemorySource
 {
     public class BlobStorageMemorySource : IMemorySource
     {

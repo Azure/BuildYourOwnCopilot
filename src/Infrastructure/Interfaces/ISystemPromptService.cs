@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildYourOwnCopilot.Service.Interfaces
+namespace BuildYourOwnCopilot.Infrastructure.Interfaces
 {
     public interface ISystemPromptService
     {

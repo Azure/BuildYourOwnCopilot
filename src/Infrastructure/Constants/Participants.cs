@@ -1,4 +1,4 @@
-namespace BuildYourOwnCopilot.Service.Constants;
+namespace BuildYourOwnCopilot.Infrastructure.Constants;
 
 public enum Participants
 {

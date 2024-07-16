@@ -1,4 +1,4 @@
-﻿namespace BuildYourOwnCopilot.Service.Services.Text
+﻿namespace BuildYourOwnCopilot.Infrastructure.Services.Text
 {
     /// <summary>
     /// Provides the configuration values required to create a new <see cref="TikTokenizer"/> instance.

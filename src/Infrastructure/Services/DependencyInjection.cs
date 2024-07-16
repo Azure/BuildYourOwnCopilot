@@ -2,12 +2,10 @@
 using BuildYourOwnCopilot.Common.Models.Configuration;
 using BuildYourOwnCopilot.Common.Services;
 using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.MemorySource;
+using BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions;
 using BuildYourOwnCopilot.Infrastructure.Services;
-using BuildYourOwnCopilot.Service.Interfaces;
-using BuildYourOwnCopilot.Service.MemorySource;
-using BuildYourOwnCopilot.Service.Models.ConfigurationOptions;
-using BuildYourOwnCopilot.Service.Services;
-using BuildYourOwnCopilot.Service.Services.Text;
+using BuildYourOwnCopilot.Infrastructure.Services.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

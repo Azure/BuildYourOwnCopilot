@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildYourOwnCopilot.Service.Models.ConfigurationOptions
+namespace BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions
 {
     public record DurableSystemPromptServiceSettings : BlobStorageSettings
     {

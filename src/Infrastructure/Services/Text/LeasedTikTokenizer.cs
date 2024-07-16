@@ -1,6 +1,6 @@
 ﻿using Microsoft.DeepDev;
 
-namespace BuildYourOwnCopilot.Service.Services.Text
+namespace BuildYourOwnCopilot.Infrastructure.Services.Text
 {
     /// <summary>
     /// Extends the <see cref="TikTokenizer"/> class to support leasing to multiple clients.

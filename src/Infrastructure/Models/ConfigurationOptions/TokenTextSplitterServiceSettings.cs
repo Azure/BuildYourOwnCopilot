@@ -1,6 +1,6 @@
-﻿using BuildYourOwnCopilot.Service.Exceptions;
+﻿using BuildYourOwnCopilot.Infrastructure.Exceptions;
 
-namespace BuildYourOwnCopilot.Service.Models.ConfigurationOptions
+namespace BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions
 {
     /// <summary>
     /// Provides configuration settings that control token-based text splitting.

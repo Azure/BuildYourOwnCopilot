@@ -3,7 +3,7 @@ using NUnit.Framework;
 using BuildYourOwnCopilot.Common.Interfaces;
 using BuildYourOwnCopilot.Common.Models.Chat;
 
-namespace BuildYourOwnCopilot.Service.Tests
+namespace BuildYourOwnCopilot.Infrastructure.Tests
 {
     [TestFixture]
     public class CosmosDbServiceTests

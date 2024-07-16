@@ -1,4 +1,4 @@
-﻿namespace BuildYourOwnCopilot.Service.Exceptions
+﻿namespace BuildYourOwnCopilot.Infrastructure.Exceptions
 {
     /// <summary>
     /// Represents an error in the tokenization process.

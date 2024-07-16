@@ -1,13 +1,11 @@
 ﻿using BuildYourOwnCopilot.Common.Models.Chat;
+using BuildYourOwnCopilot.Infrastructure.Constants;
 using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.Models.Chat;
 using BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions;
 using BuildYourOwnCopilot.SemanticKernel.Memory;
 using BuildYourOwnCopilot.SemanticKernel.Models;
 using BuildYourOwnCopilot.SemanticKernel.Plugins.Memory;
-using BuildYourOwnCopilot.Service.Constants;
-using BuildYourOwnCopilot.Service.Interfaces;
-using BuildYourOwnCopilot.Service.Models.Chat;
-using BuildYourOwnCopilot.Service.Models.ConfigurationOptions;
 using MathNet.Numerics;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.Connectors.OpenAI;

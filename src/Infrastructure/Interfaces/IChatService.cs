@@ -1,7 +1,7 @@
 ﻿using BuildYourOwnCopilot.Common.Models.BusinessDomain;
 using BuildYourOwnCopilot.Common.Models.Chat;
 
-namespace BuildYourOwnCopilot.Service.Interfaces;
+namespace BuildYourOwnCopilot.Infrastructure.Interfaces;
 
 public interface IChatService
 {

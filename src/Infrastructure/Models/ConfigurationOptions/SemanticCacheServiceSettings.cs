@@ -1,4 +1,4 @@
-﻿namespace BuildYourOwnCopilot.Service.Models.ConfigurationOptions
+﻿namespace BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions
 {
     public record SemanticCacheServiceSettings
     {

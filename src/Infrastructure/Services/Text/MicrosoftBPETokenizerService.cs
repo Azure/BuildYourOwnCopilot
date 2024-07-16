@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BuildYourOwnCopilot.Infrastructure.Exceptions;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
-using BuildYourOwnCopilot.Service.Exceptions;
-using BuildYourOwnCopilot.Service.Interfaces;
 
-namespace BuildYourOwnCopilot.Service.Services.Text
+namespace BuildYourOwnCopilot.Infrastructure.Services.Text
 {
     /// <summary>
     /// Implements an <see cref="ITokenizerService"/> using the Microsoft BPE tokenizer (https://github.com/microsoft/Tokenizer).

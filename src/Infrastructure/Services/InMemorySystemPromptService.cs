@@ -1,7 +1,7 @@
 ﻿using BuildYourOwnCopilot.Common.Text;
-using BuildYourOwnCopilot.Service.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
 
-namespace BuildYourOwnCopilot.Service.Services
+namespace BuildYourOwnCopilot.Infrastructure.Services
 {
     public class InMemorySystemPromptService : ISystemPromptService
     {

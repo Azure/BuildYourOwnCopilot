@@ -1,6 +1,6 @@
 ﻿using BuildYourOwnCopilot.Common.Models.BusinessDomain;
 
-namespace BuildYourOwnCopilot.Service.Models.Chat
+namespace BuildYourOwnCopilot.Infrastructure.Models.Chat
 {
     public class SemanticCacheItem
     {

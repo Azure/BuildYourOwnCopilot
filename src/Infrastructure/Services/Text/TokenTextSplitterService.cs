@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using BuildYourOwnCopilot.Infrastructure.Exceptions;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using BuildYourOwnCopilot.Service.Exceptions;
-using BuildYourOwnCopilot.Service.Interfaces;
-using BuildYourOwnCopilot.Service.Models.ConfigurationOptions;
 
-namespace BuildYourOwnCopilot.Service.Services.Text
+namespace BuildYourOwnCopilot.Infrastructure.Services.Text
 {
 
     /// <summary>

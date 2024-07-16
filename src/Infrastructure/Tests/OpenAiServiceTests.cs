@@ -1,13 +1,8 @@
-﻿using Moq;
+﻿using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BuildYourOwnCopilot.Service.Interfaces;
 
-namespace BuildYourOwnCopilot.Service.Tests
+namespace BuildYourOwnCopilot.Infrastructure.Tests
 {
     [TestFixture]
     public class OpenAiServiceTests

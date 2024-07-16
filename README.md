@@ -1,10 +1,10 @@
 # Build Your Own Copilot with Azure Cosmos DB
 
-This solution demonstrates how to design and implement a RAG Pattern solution that incorporates Azure Cosmos DB with Azure OpenAI Service along with other key Azure services, to build a Generative AI solution with an AI assistant user interface. 
+This solution demonstrates how to design and implement a Generative AI solution that incorporates Azure Cosmos DB with Azure OpenAI Service along with other key Azure services, to build an AI assistant user interface. The core Large Language Model (LLM) interaction pattern is [Retrieval Augmented Generation (RAG)](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/retrieval-augmented-generation) and the LLM orchestrator used to implement the pattern is [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/).
 
 The scenario for this solution is for a consumer retail "Intelligent Agent" for a retail bike shop that sells bicycles, biking accessories, components and clothing. The dataset in this solution is the [Cosmic Works](https://github.com/azurecosmosdb/cosmicworks) sample for Azure Cosmos DB, which is adapted from the [Adventure Works 2017 dataset](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms).
 
-This solution demonstrates many concepts developers will encounter when building Generative-AI applications including:
+This solution demonstrates many concepts developers will encounter when building Generative AI applications including:
 
 - Generating and storing vectors in real-time on transactional data.
 - Performing vector searches on data in a database.
@@ -18,6 +18,8 @@ This solution demonstrates many concepts developers will encounter when building
 ## What is RAG?
 
 RAG is an acronym for Retrieval Augmented Generation, a term that essentially means retrieving additional data to provide as a context to a large language model so it can generate a response (completion) based not just on a user's question (prompt) but also on that context. The data can be any kind of text. However, there is a limit to how much text can be sent due to the limit of [tokens for each model](https://platform.openai.com/docs/models/overview) that can be consumed in a single request/response from OpenAI and other large language models. This solution will highlight this challenge and provide an example of how to address it.
+
+The RAG pattern relies on vectorized data that is stored in a vector index. To learn more about the RAG pattern, see [RAG Overview](https://learn.microsoft.com/en-us/azure/ai-studio/concepts/retrieval-augmented-generation).
 
 ## User Experience
 
@@ -47,7 +49,7 @@ To deploy the solution follow the Deployment steps below. Once deployed, follow 
 
 ### Deployment
 
-This solution deploys to either Azure Kubernetes Service (**AKS**) or Azure Container Apps (**ACA**). The deployment scripts are located in the `aks` folder. The deployment scripts are designed to be run from the root of the repository. To deploy the solution, run the following commands from the root of the repository:
+This solution deploys to either Azure Kubernetes Service (**AKS**) or Azure Container Apps (**ACA**). The deployment scripts are located in the `infra/aks` and `infra/aca` folders. They are designed to be run from these dedicated folders, so you need to make sure your current working directory is properly set. To deploy the solution, run the following commands from the root of the repository:
 
 #### AKS deployment
 
@@ -95,14 +97,14 @@ From a command prompt, navigate to the `aks` or `aca` folder, depending on which
 ### AKS clean-up
 
 ```bash
-cd ./aks
+cd ./infra/aks
 azd down --purge
 ```
 
 ### ACA clean-up
 
 ```bash
-cd ./aca
+cd ./infra/aca
 azd down --purge
 ```
 

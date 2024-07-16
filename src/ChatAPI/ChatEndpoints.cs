@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BuildYourOwnCopilot.Common.Models.BusinessDomain;
-using BuildYourOwnCopilot.Service.Interfaces;
+﻿using BuildYourOwnCopilot.Common.Models.BusinessDomain;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ChatAPI
 {

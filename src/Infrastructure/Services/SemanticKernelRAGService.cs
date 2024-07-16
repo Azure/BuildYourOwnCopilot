@@ -2,16 +2,13 @@
 using BuildYourOwnCopilot.Common.Interfaces;
 using BuildYourOwnCopilot.Common.Models.BusinessDomain;
 using BuildYourOwnCopilot.Common.Models.Chat;
+using BuildYourOwnCopilot.Infrastructure.Constants;
 using BuildYourOwnCopilot.Infrastructure.Interfaces;
 using BuildYourOwnCopilot.Infrastructure.Models;
-using BuildYourOwnCopilot.Infrastructure.Services;
+using BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions;
 using BuildYourOwnCopilot.SemanticKernel.Memory;
 using BuildYourOwnCopilot.SemanticKernel.Plugins.Core;
 using BuildYourOwnCopilot.SemanticKernel.Plugins.Memory;
-using BuildYourOwnCopilot.Service.Constants;
-using BuildYourOwnCopilot.Service.Interfaces;
-using BuildYourOwnCopilot.Service.Models.ConfigurationOptions;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -23,7 +20,7 @@ using System.Text.RegularExpressions;
 
 #pragma warning disable SKEXP0001, SKEXP0010, SKEXP0020, SKEXP0050, SKEXP0060
 
-namespace BuildYourOwnCopilot.Service.Services;
+namespace BuildYourOwnCopilot.Infrastructure.Services;
 
 public class SemanticKernelRAGService : IRAGService
 {

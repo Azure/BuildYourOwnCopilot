@@ -2,7 +2,7 @@
 
 #pragma warning disable SKEXP0001
 
-namespace BuildYourOwnCopilot.Service.Services
+namespace BuildYourOwnCopilot.Infrastructure.Services
 {
     public class DefaultPromptFilter : IPromptRenderFilter
     {

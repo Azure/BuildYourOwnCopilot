@@ -1,10 +1,10 @@
 ﻿using Azure.Storage.Blobs;
-using Microsoft.Extensions.Options;
 using BuildYourOwnCopilot.Common.Text;
-using BuildYourOwnCopilot.Service.Interfaces;
-using BuildYourOwnCopilot.Service.Models.ConfigurationOptions;
+using BuildYourOwnCopilot.Infrastructure.Interfaces;
+using BuildYourOwnCopilot.Infrastructure.Models.ConfigurationOptions;
+using Microsoft.Extensions.Options;
 
-namespace BuildYourOwnCopilot.Service.Services
+namespace BuildYourOwnCopilot.Infrastructure.Services
 {
     public class DurableSystemPromptService : ISystemPromptService
     {

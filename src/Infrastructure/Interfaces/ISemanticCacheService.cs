@@ -1,7 +1,7 @@
 ﻿using BuildYourOwnCopilot.Common.Models.Chat;
-using BuildYourOwnCopilot.Service.Models.Chat;
+using BuildYourOwnCopilot.Infrastructure.Models.Chat;
 
-namespace BuildYourOwnCopilot.Service.Interfaces
+namespace BuildYourOwnCopilot.Infrastructure.Interfaces
 {
     public interface ISemanticCacheService
     {
