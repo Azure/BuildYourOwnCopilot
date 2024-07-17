@@ -37,7 +37,7 @@ Follow the steps below to deploy the solution to your Azure subscription.
     This script will deploy all services including a new Azure OpenAI account and AKS
 
     ```pwsh
-    cd ./aks
+    cd ./infra/aks
     azd up
     ```
 
@@ -47,7 +47,7 @@ Follow the steps below to deploy the solution to your Azure subscription.
     This script will deploy all services including a new Azure OpenAI account using Azure Container Apps. (This can be a good option for users not familiar with AKS)
 
     ```pwsh
-    cd ./aca
+    cd ./infra/aca
     azd up
     ```
 

@@ -13,7 +13,8 @@ Users can deploy this solution from three locations, local machine, virtual mach
 - [Helm 3.11.1 or greater](https://helm.sh/docs/intro/install/) (for AKS deployment)
 - Visual Studio 2022 (only needed if you plan to run/debug the solution locally)
 
->**NOTE**: Installation requires the choice of an Azure Region. Make sure to set region you select which is used in the `<location>` value below supports Azure OpenAI services.  See [Azure OpenAI service regions](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=cognitive-services&regions=all) for more information.
+> [!NOTE]
+> Installation requires the choice of an Azure Region. Make sure to set region you select which is used in the `<location>` value below supports Azure OpenAI services.  See [Azure OpenAI service regions](https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=cognitive-services&regions=all) for more information.
 
 ## Deployment steps
 
@@ -35,7 +36,7 @@ Follow the steps below to deploy the solution to your Azure subscription.
     ```
 
 > [!IMPORTANT]
-> **Before continuing**, make sure have enough Tokens Per Minute (TPM) in thousands quota available in your subscription. By default, the script will attempt to set a value of 120K for each deployment. In case you need to change this value, you can edit the `params.deployments.sku.capacity` values (lines 131 and 142 in the `aca\infra\main.bicep` file for **ACA** deployments, or lines 141 and 152 in the `aks\infra\main.bicep` file for **AKS** deployments).
+> **Before continuing**, make sure have enough Tokens Per Minute (TPM) in thousands quota available in your subscription. By default, the script will attempt to set a value of 120K for each deployment. In case you need to change this value, you can edit the `params.deployments.sku.capacity` values (lines 131 and 142 in the `infra\aca\infra\main.bicep` file for **ACA** deployments, or lines 141 and 152 in the `infra\aks\infra\main.bicep` file for **AKS** deployments).
 
 4. Run the following script to provision the infrastructure and deploy the API and frontend. This will provision all of the required infrastructure, deploy the API and web app services into your choice of Azure Kubeternetes Service or Azure Container Apps, and import data into Azure Cosmos DB.
 
@@ -44,7 +45,7 @@ Follow the steps below to deploy the solution to your Azure subscription.
     This script will deploy all services including a new Azure OpenAI account and AKS
 
     ```pwsh
-    cd ./aks
+    cd ./infra/aks
     azd up
     ```
 
@@ -69,7 +70,7 @@ Follow the steps below to deploy the solution to your Azure subscription.
     This script will deploy all services including a new Azure OpenAI account using Azure Container Apps. (This can be a good option for users not familiar with AKS)
 
     ```pwsh
-    cd ./aca
+    cd ./infra/aca
     azd up
     ```
 
