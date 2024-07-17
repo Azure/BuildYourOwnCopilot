@@ -1,6 +1,6 @@
 # Uploading New Sample Data
 
-It is possibly to upload custom data to this solution with zero modifications if it is the same retail scenario. The solution has a products container which contains product information, and a customer container which contains a single document for customer profile and multiple salesOrder documents for each of their sales orders.
+It is possibly to upload custom data to this solution with zero modifications if it is the same retail scenario. The solution has a `product` container which contains product information, and a `customer` container which contains a single document for customer profile and multiple salesOrder documents for each of their sales orders.
 
 To upload new data, or to extend the solution to ingest your own data that will be processed by the Change Feed and then made available as a context for chat completions, it's recommended to use the approach highlighted in the [post-deployment data import script](../infra/aca/azd-hooks/postdeploy.ps1).
 
