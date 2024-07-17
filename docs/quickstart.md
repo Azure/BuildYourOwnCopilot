@@ -2,33 +2,69 @@
 
 Follow the steps below for a simple walk-through of the application and its capabilities.
 
-@ciprianjichici, please add steps for exercising the data here more thoroughly with prompts on customers and sales orders. Also include steps for seeing the cache in action, changing min relevance, etc.
-
 ## Sample User Prompts
 
 1. Browse to the web application for the solution in your browser.
-1. Click [+ Create New Chat] button to create a new chat session.
-1. Type in your questions in the text box and press Enter.
+2. Click [+ Create New Chat] button to create a new chat session.
+3. Type in your questions in the text box and press Enter.
 
 Here are some sample questions you can ask:
 
+- What kind of products do you sell?
+- Tell me more about the Clothing product category.
 - What kind of socks do you have available?
+- Which colors are available for the race socks?
 - Do you have any customers from Canada? Where in Canada are they from?
 - What kinds of bikes are in your product inventory?
-
-- add more here
-
+- What are your standard shipping policies?
+- Do you have any product return policies?
 
 ## Exploring the Semantic Cache
 
-1. 
+1. Browse to the web application for the solution in your browser.
+2. Click [+ Create New Chat] button to create a new chat session.
+3. Type in your questions in the text box and press Enter.
 
-User types in some prompts for data that gets cached.
-In new session test similar prompts, observe results.
-Change similarity score. Start new sequence of prompts and completions, see the impact on cache hits.
+First, start with a system command to reset the semantic cache. Type in the following text:
 
-etc...
+`Please reset the semantic cache`
 
+For more details on using system commands for the Semantic Cache, see the [System commands to manage the Semantic Cache](#system-commands-to-manage-the-semantic-cache) section below.
+
+Once you get the confirmation that the cache has been reset, you can start asking questions to see the cache in action. Here is a sequence of actions that will allow you to experience the capabilities of the semantic cache:
+
+1. Populate the cache.
+ 
+- First, create a new chat (to avoid the interference of system commands with the chat history).
+- In the newly created chat, ask the following sequence of questions:
+  - `What kind of products do you sell?`
+  - `Do you have any shipping policies?`
+  - `How about any product return policies?`
+
+2. Ask the same questions again.
+
+- In the same chat session, ask the last question again: `How about any product return policies?`
+- Notice how the response is generated much faster than the first time you asked the question. Also, the number of tokens is zero for both the completion and the response, indicating that the response was generated from the semantic cache.
+
+3. Ask a similar line of questions again.
+
+- Create a new chat session.
+- Ask the following sequence of questions:
+  - `What kind of products do you sell?`
+  - `Do you have any shipping policies?`
+  - `How about any product return policies?`
+  
+Notice how at some point in the conversation, the responses are generated from the semantic cache.
+
+4. Change the similarity threshold value.
+
+The default semantic cache similarity threshold value is 0.95, which is very high. This ensures that only very similar lines of questions are matched to the cache. You can lower this value to see how it affects the cache hits.
+
+- Return to the system commands chat and type the following command: `Set the semantic cache similarity score to 0.75`
+- Create a new chat session and ask similar questions to the ones from step 3. Play around with the questions and see how the cache is used.
+
+> [!TIP]
+> After you have finished exploring the semantic cache, it is highly recommended to set the similarity threshold value back to the default value of 0.95. This will ensure that the cache is used only for very similar questions.
 
 ### System commands to manage the Semantic Cache
 
