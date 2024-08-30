@@ -91,10 +91,11 @@ function Change-CodeFile {
 
             $linesToInsert = [System.Collections.ArrayList]@(($replacementLines | Select-Object $paddedContent | ForEach-Object {$_.PaddedContent.Replace("__EXERCISE_CONTEXT__", $exerciseContext)}))
 
+            $docsIndex = $docs.Add("Exercise:")
             $docsIndex = $docs.Add("``````csharp")
             $docs.InsertRange($docs.Count, $linesToInsert)
             $docsIndex = $docs.Add("``````")
-            $docsIndex = $docs.Add("")
+            $docsIndex = $docs.Add("---")
             $docsIndex = $docs.Add("Solution:")
             $docsIndex = $docs.Add("``````csharp")
             $docs.InsertRange($docs.Count, $lines[$lineIndex..($lineIndex + $removedLinesCount-1)])
