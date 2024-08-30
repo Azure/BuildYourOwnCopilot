@@ -97,7 +97,7 @@ function Change-CodeFile {
             $docsIndex = $docs.Add("")
             $docsIndex = $docs.Add("Solution:")
             $docsIndex = $docs.Add("``````csharp")
-            $docs.InsertRange($docs.Count, $lines[$lineIndex..($lineIndex + $removedLinesCount)])
+            $docs.InsertRange($docs.Count, $lines[$lineIndex..($lineIndex + $removedLinesCount-1)])
             $docsIndex = $docs.Add("``````")
 
             $lines.RemoveRange($lineIndex, $removedLinesCount)
